@@ -1,0 +1,12 @@
+# Robots.txt for Pos Resmi Virgi Motor Cikarang
+# https://www.virgimotor.com
+
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://www.virgimotor.com/sitemap.xml
+
+# Block crawling of admin or internal pages (if any)
+Disallow: /api/
+Disallow: /_next/

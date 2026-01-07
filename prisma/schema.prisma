@@ -1,0 +1,150 @@
+// ============================================================
+// 🗄️ PRISMA SCHEMA - Database Structure
+// ============================================================
+// Schema ini mendefinisikan struktur database untuk CMS.
+// Gunakan `npx prisma db push` untuk sync ke database.
+// ============================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================
+// 🔐 AUTHENTICATION MODELS (NextAuth.js)
+// ============================================================
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  password      String    // Hashed password
+  role          String    @default("admin") // admin, super_admin
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+// ============================================================
+// 🏍️ PRODUCT MODEL (Motor)
+// ============================================================
+
+model Product {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  category  String   // Matic, Sport, Cub, EV
+  price     Int      // Harga OTR dalam Rupiah
+  dpMin     Int      // DP Minimum
+  cc        String   // Kapasitas mesin
+  image     String   // URL gambar
+  features  String[] // Array of features
+  order     Int      @default(0) // Untuk sorting
+
+  // Promo Fields (embedded, tidak perlu tabel terpisah)
+  promoActive       Boolean   @default(false)
+  promoBadgeText    String?   // "Hemat 1.5 Jt"
+  promoHighlights   String[]  // ["DP 500rb", "Gratis Oli"]
+  promoCardBgColor  String?   // "bg-red-50"
+  promoCardTextColor String?  // "text-white"
+  promoEndDate      DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ============================================================
+// 👥 TEAM MEMBER MODEL (Sales/Staff)
+// ============================================================
+
+model TeamMember {
+  id        String   @id @default(cuid())
+  name      String
+  role      String   // "Sales Consultant", "Admin", etc.
+  photo     String?  // URL foto
+  whatsapp  String?  // Nomor WA
+  isActive  Boolean  @default(true)
+  order     Int      @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ============================================================
+// 🖼️ HERO SLIDE MODEL (Slider Homepage)
+// ============================================================
+
+model HeroSlide {
+  id        String   @id @default(cuid())
+  image     String   // URL gambar
+  title     String?  // Optional caption
+  isActive  Boolean  @default(true)
+  order     Int      @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ============================================================
+// 📷 GALLERY IMAGE MODEL (Galeri Tentang Kami)
+// ============================================================
+
+model GalleryImage {
+  id        String   @id @default(cuid())
+  image     String   // URL gambar
+  label     String?  // "Showroom", "Serah Terima", etc.
+  category  String?  // Untuk filter
+  isActive  Boolean  @default(true)
+  order     Int      @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ============================================================
+// ⚙️ SETTINGS MODEL (Pengaturan Umum - Key-Value Store)
+// ============================================================
+
+model Setting {
+  id        String   @id @default(cuid())
+  key       String   @unique // "whatsapp_number", "address", etc.
+  value     String   // Nilai setting
+  type      String   @default("text") // text, textarea, image, etc.
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ============================================================
+// ⭐ TESTIMONIAL MODEL (Review Pelanggan)
+// ============================================================
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  name      String   // Nama pelanggan
+  photo     String?  // Foto pelanggan
+  motor     String?  // Motor yang dibeli
+  rating    Int      @default(5) // 1-5 bintang
+  message   String   // Pesan testimoni
+  isActive  Boolean  @default(true)
+  order     Int      @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ============================================================
+// 📊 PAGE VIEW MODEL (Analytics Sederhana)
+// ============================================================
+
+model PageView {
+  id        String   @id @default(cuid())
+  path      String   // "/", "/katalog", "/tentang-kami"
+  date      String   // "2024-01-08"
+  count     Int      @default(1)
+  
+  @@unique([path, date])
+}

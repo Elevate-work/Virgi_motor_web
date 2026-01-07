@@ -1,0 +1,21 @@
+# ============================================================
+# 🔧 ENVIRONMENT VARIABLES
+# ============================================================
+# Copy file ini ke .env.local dan isi dengan nilai asli Anda.
+# JANGAN commit .env.local ke Git!
+# ============================================================
+
+# --- DATABASE ---
+# Buat database gratis di https://neon.tech atau https://supabase.com
+# Contoh format: postgresql://user:password@host:5432/database?sslmode=require
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:5432/DATABASE?sslmode=require"
+
+# --- NEXTAUTH ---
+# Generate secret: openssl rand -base64 32
+# Atau gunakan: https://generate-secret.vercel.app/32
+NEXTAUTH_SECRET="your-super-secret-key-here-change-this"
+NEXTAUTH_URL="http://localhost:3000"
+
+# --- ADMIN CREDENTIALS (untuk seed awal) ---
+ADMIN_EMAIL="admin@virgimotor.com"
+ADMIN_PASSWORD="admin123"

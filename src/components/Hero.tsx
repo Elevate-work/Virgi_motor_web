@@ -112,10 +112,10 @@ export default function Hero() {
                 style={{ transform: "skewX(-15deg)" }}
             />
 
-            <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 relative z-10 w-full h-full flex flex-col md:flex-row items-start md:items-center pt-20 sm:pt-24 md:pt-28">
+            <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 relative z-10 w-full min-h-screen flex flex-col justify-center pb-32 md:pb-40 pt-24">
 
                 {/* === LEFT CONTENT === */}
-                <div className="w-full md:w-[45%] lg:w-[40%] z-20 flex flex-col items-center md:items-start text-center md:text-left pt-36 sm:pt-10 md:pt-0">
+                <div className="w-full md:w-[50%] lg:w-[45%] z-20 flex flex-col items-center md:items-start text-center md:text-left">
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -129,21 +129,20 @@ export default function Hero() {
                         </div>
 
                         {/* HEADLINE */}
-                        <div className="flex flex-col mb-6 md:mb-8 relative space-y-1 md:space-y-0">
-                            <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-[4.5rem] font-sans font-black tracking-tighter leading-tight md:leading-[0.85] z-10 transition-all text-tesla-black md:text-transparent md:italic"
+                        <div className="flex flex-col mb-6 md:mb-8 relative">
+                            <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl font-sans font-black tracking-tighter leading-none text-tesla-black md:text-transparent md:italic"
                                 style={{
                                     WebkitTextStroke: "1.5px #222",
-                                    color: "var(--text-color, #222)"
                                 }}>
                                 <span className="md:hidden text-tesla-black not-italic">PROMO SPESIAL</span>
                                 <span className="hidden md:block" style={{ color: 'transparent' }}>PROMO SPESIAL</span>
                             </h1>
 
-                            <h1 className="text-5xl sm:text-6xl md:text-6xl lg:text-[5.5rem] font-sans font-black tracking-tighter text-[#DA0000] leading-none md:leading-[0.85] z-20 md:-mt-2 md:italic">
+                            <h1 className="text-5xl sm:text-6xl md:text-6xl lg:text-7xl xl:text-8xl font-sans font-black tracking-tighter text-[#DA0000] leading-none md:italic mt-1 md:mt-0">
                                 DISKON BESAR
                             </h1>
 
-                            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[4.5rem] font-sans font-black tracking-tighter leading-tight md:leading-[0.85] z-10 md:-mt-2 md:-ml-1 transition-all text-tesla-black md:text-transparent md:italic"
+                            <h1 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl font-sans font-black tracking-tighter leading-none text-tesla-black md:text-transparent md:italic mt-1 md:mt-0"
                                 style={{
                                     WebkitTextStroke: "1.5px #222",
                                 }}>
@@ -153,8 +152,8 @@ export default function Hero() {
                         </div>
 
                         {/* Description */}
-                        <div className="bg-white/80 md:bg-transparent backdrop-blur-md md:backdrop-blur-none rounded-xl p-4 md:p-0 mb-8 md:mb-10 shadow-lg md:shadow-none">
-                            <p className="text-gray-600 md:text-gray-500 text-base md:text-xl font-medium max-w-lg leading-relaxed mx-auto md:mx-0">
+                        <div className="bg-white/80 md:bg-transparent backdrop-blur-md md:backdrop-blur-none rounded-xl p-4 md:p-0 mb-8 shadow-lg md:shadow-none max-w-md">
+                            <p className="text-gray-600 md:text-gray-500 text-base md:text-lg font-medium leading-relaxed">
                                 Dapatkan potongan harga hingga jutaan rupiah, DP mulai 5%, dan bunga rendah. <span className="text-[#DA0000] font-bold">Hanya bulan ini!</span>
                             </p>
                         </div>

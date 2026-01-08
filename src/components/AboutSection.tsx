@@ -1,65 +1,76 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { BadgeCheck, Clock, HeartHandshake, ShieldCheck, MapPin, Users, Phone, MessageCircle, Award, Star, CheckCircle2, Building2, Calendar } from 'lucide-react';
+import { BadgeCheck, Clock, HeartHandshake, ShieldCheck, MapPin, Phone, MessageCircle, Award, Calendar, ImageIcon, User } from 'lucide-react';
 
-// ============================================================
-// PLACEHOLDER IMAGES - Ganti dengan foto asli dealer Anda
-// ============================================================
-const GALLERY_IMAGES = [
-    { src: "https://placehold.co/800x600/E8E8E8/666?text=FOTO+SHOWROOM+DEPAN", alt: "Tampak Depan Showroom", label: "Showroom" },
-    { src: "https://placehold.co/800x600/E8E8E8/666?text=FOTO+SHOWROOM+DALAM", alt: "Interior Showroom", label: "Interior" },
-    { src: "https://placehold.co/800x600/E8E8E8/666?text=FOTO+DISPLAY+MOTOR", alt: "Area Display Motor", label: "Display" },
-    { src: "https://placehold.co/800x600/E8E8E8/666?text=FOTO+AREA+SERVICE", alt: "Area Service", label: "Service" },
-    { src: "https://placehold.co/800x600/E8E8E8/666?text=FOTO+SERAH+TERIMA+1", alt: "Serah Terima Unit", label: "Serah Terima" },
-    { src: "https://placehold.co/800x600/E8E8E8/666?text=FOTO+SERAH+TERIMA+2", alt: "Customer Happy", label: "Customer" },
-    { src: "https://placehold.co/800x600/E8E8E8/666?text=FOTO+STAFF+KERJA", alt: "Staff Bekerja", label: "Tim Kami" },
-    { src: "https://placehold.co/800x600/E8E8E8/666?text=FOTO+CUSTOMER+PUAS", alt: "Pelanggan Puas", label: "Testimoni" },
-];
+type GalleryImage = {
+    id: string;
+    image: string;
+    label: string | null;
+};
 
-const TEAM_MEMBERS = [
-    {
-        name: "Bpk. Virgi",
-        role: "Sales Consultant / Supervisor",
-        image: "https://placehold.co/400x400/DA0000/FFF?text=FOTO+BPK+VIRGI",
-        phone: "0812-3456-7890", // Ganti dengan nomor asli
-        whatsapp: "6281234567890", // Ganti dengan nomor asli
-    },
-    {
-        name: "Staff 1",
-        role: "Sales Executive",
-        image: "https://placehold.co/400x400/333/FFF?text=FOTO+STAFF+1",
-        phone: "-",
-        whatsapp: "",
-    },
-    {
-        name: "Staff 2",
-        role: "Admin",
-        image: "https://placehold.co/400x400/333/FFF?text=FOTO+STAFF+2",
-        phone: "-",
-        whatsapp: "",
-    },
-];
+type TeamMember = {
+    id: string;
+    name: string;
+    role: string;
+    photo: string | null;
+    whatsapp: string | null;
+};
 
 export default function AboutSection() {
+    const [gallery, setGallery] = useState<GalleryImage[]>([]);
+    const [team, setTeam] = useState<TeamMember[]>([]);
+    const [loadingGallery, setLoadingGallery] = useState(true);
+    const [loadingTeam, setLoadingTeam] = useState(true);
+
+    // Fetch gallery from database
+    useEffect(() => {
+        async function fetchGallery() {
+            try {
+                const res = await fetch('/api/public/gallery');
+                const data = await res.json();
+                if (Array.isArray(data)) {
+                    setGallery(data);
+                }
+            } catch (error) {
+                console.error('Failed to fetch gallery:', error);
+            } finally {
+                setLoadingGallery(false);
+            }
+        }
+        fetchGallery();
+    }, []);
+
+    // Fetch team from database
+    useEffect(() => {
+        async function fetchTeam() {
+            try {
+                const res = await fetch('/api/public/team');
+                const data = await res.json();
+                if (Array.isArray(data)) {
+                    setTeam(data);
+                }
+            } catch (error) {
+                console.error('Failed to fetch team:', error);
+            } finally {
+                setLoadingTeam(false);
+            }
+        }
+        fetchTeam();
+    }, []);
+
     return (
         <div className="bg-white">
             {/* ============================================================ */}
-            {/* SECTION 1: HERO BANNER - "POS RESMI" Identity */}
+            {/* SECTION 1: HERO BANNER */}
             {/* ============================================================ */}
-            <section className="relative bg-gradient-to-br from-[#DA0000] to-[#8C0E12] pt-32 pb-24 sm:pb-32 overflow-hidden">
-                {/* Background Decorations */}
+            <section className="relative bg-linear-to-br from-[#DA0000] to-[#8C0E12] pt-32 pb-24 sm:pb-32 overflow-hidden">
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
                 <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-black/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
 
-                {/* Texture */}
-                <div className="absolute inset-0 opacity-20 pointer-events-none mix-blend-overlay">
-                    <svg width="100%" height="100%"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" stitchTiles="stitch" /></filter><rect width="100%" height="100%" filter="url(#noise)" /></svg>
-                </div>
-
                 <div className="max-w-[1200px] mx-auto px-6 md:px-12 text-center relative z-10">
-                    {/* Official Badge */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -70,7 +81,6 @@ export default function AboutSection() {
                         <span className="text-white font-bold text-sm uppercase tracking-widest">Dealer Resmi Honda</span>
                     </motion.div>
 
-                    {/* Main Headline */}
                     <motion.h1
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -81,7 +91,6 @@ export default function AboutSection() {
                         <span className="text-red-200">Virgi Motor</span> Cikarang
                     </motion.h1>
 
-                    {/* Subheadline */}
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -92,7 +101,6 @@ export default function AboutSection() {
                         Unit 100% baru, garansi penuh AHM, dengan pelayanan personal terbaik.
                     </motion.p>
 
-                    {/* CTA */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -111,12 +119,11 @@ export default function AboutSection() {
             </section>
 
             {/* ============================================================ */}
-            {/* SECTION 2: ABOUT POS RESMI - Explanation */}
+            {/* SECTION 2: ABOUT POS RESMI */}
             {/* ============================================================ */}
             <section className="py-20 sm:py-28 bg-gray-50">
                 <div className="max-w-[1200px] mx-auto px-6 md:px-12">
                     <div className="grid lg:grid-cols-2 gap-16 items-center">
-                        {/* Left: Text */}
                         <motion.div
                             initial={{ opacity: 0, x: -30 }}
                             whileInView={{ opacity: 1, x: 0 }}
@@ -141,7 +148,6 @@ export default function AboutSection() {
                             </div>
                         </motion.div>
 
-                        {/* Right: Image Placeholder */}
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95 }}
                             whileInView={{ opacity: 1, scale: 1 }}
@@ -149,15 +155,23 @@ export default function AboutSection() {
                             viewport={{ once: true }}
                             className="relative"
                         >
-                            <div className="relative rounded-[32px] overflow-hidden aspect-[4/3] shadow-2xl">
-                                <Image
-                                    src="https://placehold.co/800x600/DA0000/FFF?text=FOTO+DEALER+VIRGI+MOTOR"
-                                    alt="Dealer Virgi Motor"
-                                    fill
-                                    className="object-cover"
-                                />
+                            <div className="relative rounded-[32px] overflow-hidden aspect-4/3 shadow-2xl bg-gray-200">
+                                {gallery.length > 0 ? (
+                                    <Image
+                                        src={gallery[0].image}
+                                        alt="Dealer Virgi Motor"
+                                        fill
+                                        className="object-cover"
+                                    />
+                                ) : (
+                                    <div className="w-full h-full flex items-center justify-center bg-gray-100">
+                                        <div className="text-center text-gray-400">
+                                            <ImageIcon size={48} className="mx-auto mb-2" />
+                                            <p className="text-sm">Upload foto via Admin Gallery</p>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
-                            {/* Floating Badge */}
                             <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-xl p-6 flex items-center gap-4">
                                 <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center">
                                     <Award className="w-7 h-7 text-primary" />
@@ -173,101 +187,119 @@ export default function AboutSection() {
             </section>
 
             {/* ============================================================ */}
-            {/* SECTION 3: PHOTO GALLERY */}
+            {/* SECTION 3: PHOTO GALLERY (FROM DATABASE) */}
             {/* ============================================================ */}
-            <section className="py-20 sm:py-28 bg-white">
-                <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-                    <div className="text-center mb-16">
-                        <span className="text-primary font-bold tracking-widest uppercase text-sm mb-4 block">Galeri Foto</span>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-tesla-black">
-                            Lihat Kondisi <span className="text-primary">Dealer Kami</span>
-                        </h2>
-                        <p className="text-gray-500 mt-4 max-w-xl mx-auto">
-                            Foto-foto showroom, area display, aktivitas serah terima unit, dan pelayanan kami kepada pelanggan.
-                        </p>
-                    </div>
+            {(loadingGallery || gallery.length > 0) && (
+                <section className="py-20 sm:py-28 bg-white">
+                    <div className="max-w-[1400px] mx-auto px-6 md:px-12">
+                        <div className="text-center mb-16">
+                            <span className="text-primary font-bold tracking-widest uppercase text-sm mb-4 block">Galeri Foto</span>
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-tesla-black">
+                                Lihat Kondisi <span className="text-primary">Dealer Kami</span>
+                            </h2>
+                            <p className="text-gray-500 mt-4 max-w-xl mx-auto">
+                                Foto-foto showroom, area display, aktivitas serah terima unit, dan pelayanan kami kepada pelanggan.
+                            </p>
+                        </div>
 
-                    {/* Gallery Grid */}
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                        {GALLERY_IMAGES.map((img, i) => (
-                            <motion.div
-                                key={i}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: i * 0.05, duration: 0.5 }}
-                                viewport={{ once: true }}
-                                className="relative aspect-[4/3] rounded-2xl overflow-hidden group cursor-pointer"
-                            >
-                                <Image
-                                    src={img.src}
-                                    alt={img.alt}
-                                    fill
-                                    className="object-cover group-hover:scale-110 transition-transform duration-500"
-                                />
-                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                                    <span className="text-white font-bold text-sm">{img.label}</span>
-                                </div>
-                            </motion.div>
-                        ))}
+                        {loadingGallery ? (
+                            <div className="flex justify-center py-16">
+                                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                {gallery.map((img, i) => (
+                                    <motion.div
+                                        key={img.id}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: i * 0.05, duration: 0.5 }}
+                                        viewport={{ once: true }}
+                                        className="relative aspect-4/3 rounded-2xl overflow-hidden group cursor-pointer bg-gray-100"
+                                    >
+                                        <Image
+                                            src={img.image}
+                                            alt={img.label || 'Gallery'}
+                                            fill
+                                            className="object-cover group-hover:scale-110 transition-transform duration-500"
+                                        />
+                                        {img.label && (
+                                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                                                <span className="text-white font-bold text-sm">{img.label}</span>
+                                            </div>
+                                        )}
+                                    </motion.div>
+                                ))}
+                            </div>
+                        )}
                     </div>
-                </div>
-            </section>
+                </section>
+            )}
 
             {/* ============================================================ */}
-            {/* SECTION 4: OUR TEAM */}
+            {/* SECTION 4: OUR TEAM (FROM DATABASE) */}
             {/* ============================================================ */}
-            <section className="py-20 sm:py-28 bg-gray-50">
-                <div className="max-w-[1200px] mx-auto px-6 md:px-12">
-                    <div className="text-center mb-16">
-                        <span className="text-primary font-bold tracking-widest uppercase text-sm mb-4 block">Tim Kami</span>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-tesla-black">
-                            Kenali <span className="text-primary">Sales Kami</span>
-                        </h2>
-                        <p className="text-gray-500 mt-4 max-w-xl mx-auto">
-                            Tim profesional yang siap membantu Anda memiliki motor Honda impian dengan proses mudah dan cepat.
-                        </p>
-                    </div>
+            {(loadingTeam || team.length > 0) && (
+                <section className="py-20 sm:py-28 bg-gray-50">
+                    <div className="max-w-[1200px] mx-auto px-6 md:px-12">
+                        <div className="text-center mb-16">
+                            <span className="text-primary font-bold tracking-widest uppercase text-sm mb-4 block">Tim Kami</span>
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-tesla-black">
+                                Kenali <span className="text-primary">Sales Kami</span>
+                            </h2>
+                            <p className="text-gray-500 mt-4 max-w-xl mx-auto">
+                                Tim profesional yang siap membantu Anda memiliki motor Honda impian dengan proses mudah dan cepat.
+                            </p>
+                        </div>
 
-                    {/* Team Grid */}
-                    <div className="grid md:grid-cols-3 gap-8">
-                        {TEAM_MEMBERS.map((member, i) => (
-                            <motion.div
-                                key={i}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: i * 0.1, duration: 0.5 }}
-                                viewport={{ once: true }}
-                                className="bg-white rounded-[24px] overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
-                            >
-                                {/* Photo */}
-                                <div className="relative aspect-square bg-gray-100">
-                                    <Image
-                                        src={member.image}
-                                        alt={member.name}
-                                        fill
-                                        className="object-cover"
-                                    />
-                                </div>
-                                {/* Info */}
-                                <div className="p-6 text-center">
-                                    <h3 className="text-xl font-bold text-tesla-black mb-1">{member.name}</h3>
-                                    <p className="text-gray-500 text-sm mb-4">{member.role}</p>
-                                    {member.whatsapp && (
-                                        <a
-                                            href={`https://wa.me/${member.whatsapp}`}
-                                            target="_blank"
-                                            className="inline-flex items-center gap-2 px-6 py-3 bg-[#25D366] text-white font-bold rounded-full hover:bg-[#20bd5a] transition-colors text-sm"
-                                        >
-                                            <MessageCircle size={16} />
-                                            Chat WhatsApp
-                                        </a>
-                                    )}
-                                </div>
-                            </motion.div>
-                        ))}
+                        {loadingTeam ? (
+                            <div className="flex justify-center py-16">
+                                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+                            </div>
+                        ) : (
+                            <div className="grid md:grid-cols-3 gap-8">
+                                {team.map((member, i) => (
+                                    <motion.div
+                                        key={member.id}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: i * 0.1, duration: 0.5 }}
+                                        viewport={{ once: true }}
+                                        className="bg-white rounded-[24px] overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+                                    >
+                                        <div className="relative aspect-square bg-gray-100 flex items-center justify-center">
+                                            {member.photo ? (
+                                                <Image
+                                                    src={member.photo}
+                                                    alt={member.name}
+                                                    fill
+                                                    className="object-cover"
+                                                />
+                                            ) : (
+                                                <User size={64} className="text-gray-300" />
+                                            )}
+                                        </div>
+                                        <div className="p-6 text-center">
+                                            <h3 className="text-xl font-bold text-tesla-black mb-1">{member.name}</h3>
+                                            <p className="text-gray-500 text-sm mb-4">{member.role}</p>
+                                            {member.whatsapp && (
+                                                <a
+                                                    href={`https://wa.me/${member.whatsapp}`}
+                                                    target="_blank"
+                                                    className="inline-flex items-center gap-2 px-6 py-3 bg-[#25D366] text-white font-bold rounded-full hover:bg-[#20bd5a] transition-colors text-sm"
+                                                >
+                                                    <MessageCircle size={16} />
+                                                    Chat WhatsApp
+                                                </a>
+                                            )}
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        )}
                     </div>
-                </div>
-            </section>
+                </section>
+            )}
 
             {/* ============================================================ */}
             {/* SECTION 5: TRUST BADGES */}
@@ -335,7 +367,6 @@ export default function AboutSection() {
             <section id="contact" className="py-20 sm:py-28 bg-tesla-black text-white">
                 <div className="max-w-[1200px] mx-auto px-6 md:px-12">
                     <div className="grid lg:grid-cols-2 gap-16">
-                        {/* Left: Info */}
                         <div>
                             <span className="text-primary font-bold tracking-widest uppercase text-sm mb-4 block">Lokasi & Kontak</span>
                             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight mb-8">
@@ -343,7 +374,6 @@ export default function AboutSection() {
                             </h2>
 
                             <div className="space-y-6">
-                                {/* Address */}
                                 <div className="flex gap-4">
                                     <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
                                         <MapPin className="w-5 h-5 text-primary" />
@@ -351,11 +381,9 @@ export default function AboutSection() {
                                     <div>
                                         <h4 className="font-bold text-white mb-1">Alamat</h4>
                                         <p className="text-gray-400">Jl. Cikarang Baru No. 88, Cikarang Utara, Bekasi, Jawa Barat 17530</p>
-                                        <p className="text-gray-500 text-sm mt-1">(Ganti dengan alamat asli)</p>
                                     </div>
                                 </div>
 
-                                {/* Phone */}
                                 <div className="flex gap-4">
                                     <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
                                         <Phone className="w-5 h-5 text-primary" />
@@ -363,11 +391,9 @@ export default function AboutSection() {
                                     <div>
                                         <h4 className="font-bold text-white mb-1">Telepon</h4>
                                         <p className="text-gray-400">(021) 8900-8888</p>
-                                        <p className="text-gray-500 text-sm mt-1">(Ganti dengan nomor asli)</p>
                                     </div>
                                 </div>
 
-                                {/* WhatsApp */}
                                 <div className="flex gap-4">
                                     <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
                                         <MessageCircle className="w-5 h-5 text-primary" />
@@ -375,11 +401,9 @@ export default function AboutSection() {
                                     <div>
                                         <h4 className="font-bold text-white mb-1">WhatsApp</h4>
                                         <a href="https://wa.me/6281234567890" target="_blank" className="text-[#25D366] hover:underline">0812-3456-7890</a>
-                                        <p className="text-gray-500 text-sm mt-1">(Ganti dengan nomor asli)</p>
                                     </div>
                                 </div>
 
-                                {/* Operating Hours */}
                                 <div className="flex gap-4">
                                     <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
                                         <Calendar className="w-5 h-5 text-primary" />
@@ -393,21 +417,17 @@ export default function AboutSection() {
                             </div>
                         </div>
 
-                        {/* Right: Map Placeholder */}
-                        <div className="relative rounded-[32px] overflow-hidden aspect-[4/3] lg:aspect-auto bg-gray-800">
-                            <Image
-                                src="https://placehold.co/800x600/333/FFF?text=GOOGLE+MAPS+EMBED"
-                                alt="Lokasi Dealer"
-                                fill
-                                className="object-cover"
+                        <div className="relative rounded-[32px] overflow-hidden aspect-4/3 lg:aspect-auto bg-gray-800">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.5!2d107.1!3d-6.3!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwMTgnMDAuMCJTIDEwN8KwMDYnMDAuMCJF!5e0!3m2!1sen!2sid!4v1"
+                                width="100%"
+                                height="100%"
+                                style={{ border: 0, minHeight: '300px' }}
+                                allowFullScreen
+                                loading="lazy"
+                                referrerPolicy="no-referrer-when-downgrade"
+                                className="absolute inset-0"
                             />
-                            <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                                <div className="text-center">
-                                    <MapPin className="w-12 h-12 text-primary mx-auto mb-4" />
-                                    <p className="text-white font-bold">Embed Google Maps di sini</p>
-                                    <p className="text-gray-400 text-sm mt-1">(atau ganti dengan foto lokasi)</p>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

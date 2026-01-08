@@ -9,8 +9,7 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 
 export default function Home() {
   return (
-    // Added pt-24 to push content down because Navbar is fixed
-    <div className="flex flex-col w-full min-h-screen bg-base-white pt-24">
+    <div className="flex flex-col w-full min-h-screen bg-base-white">
 
       <main>
         <Hero />

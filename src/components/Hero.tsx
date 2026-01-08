@@ -49,7 +49,7 @@ export default function Hero() {
     const currentImage = hasSlides ? slides[currentSlide]?.image : '/hero_placeholder.jpg';
 
     return (
-        <section className="relative w-full bg-white overflow-hidden min-h-dvh font-sans">
+        <section className="relative w-full bg-white overflow-hidden min-h-screen font-sans">
 
             {/* === SLIDER BACKGROUND === */}
             <div
@@ -79,7 +79,7 @@ export default function Hero() {
                         </motion.div>
                     </AnimatePresence>
                 ) : (
-                    <div className="absolute inset-0 bg-gradient-to-br from-red-600 to-red-800">
+                    <div className="absolute inset-0 bg-linear-to-br from-red-600 to-red-800">
                         <div className="absolute inset-0 bg-black/30" />
                         {loading && (
                             <div className="absolute inset-0 flex items-center justify-center">
@@ -98,8 +98,8 @@ export default function Hero() {
                             key={index}
                             onClick={() => setCurrentSlide(index)}
                             className={`w-3 h-3 rounded-full transition-all ${index === currentSlide
-                                    ? 'bg-white scale-125'
-                                    : 'bg-white/50 hover:bg-white/75'
+                                ? 'bg-white scale-125'
+                                : 'bg-white/50 hover:bg-white/75'
                                 }`}
                         />
                     ))}

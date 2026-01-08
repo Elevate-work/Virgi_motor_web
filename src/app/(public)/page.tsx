@@ -5,7 +5,6 @@ import PromoSection from "@/components/PromoSection";
 import TeamSection from "@/components/TeamSection";
 import CreditSimulation from "@/components/CreditSimulation";
 import Hero from "@/components/Hero";
-import GallerySection from "@/components/GallerySection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 
 export default function Home() {
@@ -17,7 +16,6 @@ export default function Home() {
         <Hero />
         <Features />
         <PromoSection />
-        <GallerySection />
         <TestimonialsSection />
         <CreditSimulation />
         <TeamSection />

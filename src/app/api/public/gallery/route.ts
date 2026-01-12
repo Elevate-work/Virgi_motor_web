@@ -1,11 +1,18 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 
 // GET /api/public/gallery - Get active gallery images
-export async function GET() {
+// Optional query param: ?category=konsultan-personal
+export async function GET(request: NextRequest) {
     try {
+        const { searchParams } = new URL(request.url);
+        const category = searchParams.get('category');
+
         const images = await prisma.galleryImage.findMany({
-            where: { isActive: true },
+            where: {
+                isActive: true,
+                ...(category && { category: category }),
+            },
             orderBy: { order: 'asc' },
             select: {
                 id: true,

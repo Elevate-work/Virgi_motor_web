@@ -26,11 +26,11 @@ export default function AboutSection() {
     const [loadingGallery, setLoadingGallery] = useState(true);
     const [loadingTeam, setLoadingTeam] = useState(true);
 
-    // Fetch gallery from database
+    // Fetch gallery from database (only 'tentang-kami' category)
     useEffect(() => {
         async function fetchGallery() {
             try {
-                const res = await fetch('/api/public/gallery');
+                const res = await fetch('/api/public/gallery?category=tentang-kami');
                 const data = await res.json();
                 if (Array.isArray(data)) {
                     setGallery(data);

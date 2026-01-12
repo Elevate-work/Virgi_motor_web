@@ -2,36 +2,59 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, Phone, Award, Clock, ThumbsUp, ChevronLeft, ChevronRight } from 'lucide-react';
+import { MessageCircle, Phone, Award, Clock, ThumbsUp, ChevronLeft, ChevronRight, ImageIcon } from 'lucide-react';
 import Image from 'next/image';
 import { getWhatsAppLink, siteConfig } from '@/lib/config';
 
-// Placeholder images for documentation gallery
-// Replace these URLs with real photos of your father with customers
-const GALLERY_IMAGES = [
-    "https://placehold.co/600x800/png?text=FOTO+PROFIL+BAPAK", // Foto Utama (Profil)
-    "https://placehold.co/600x800/png?text=SERAH+TERIMA+1+PCX", // Dokumentasi 1
-    "https://placehold.co/600x800/png?text=CUSTOMER+VARIO+HAPPY", // Dokumentasi 2
-    "https://placehold.co/600x800/png?text=AKTIVITAS+DEALER", // Dokumentasi 3
+type GalleryImage = {
+    id: string;
+    image: string;
+    label: string | null;
+};
+
+// Fallback images jika belum ada di database
+const FALLBACK_IMAGES = [
+    "https://placehold.co/600x800/f3f4f6/9ca3af?text=Upload+Foto+di+CMS",
 ];
 
 export default function TeamSection() {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [galleryImages, setGalleryImages] = useState<string[]>(FALLBACK_IMAGES);
+    const [loading, setLoading] = useState(true);
+
+    // Fetch gallery images from database
+    useEffect(() => {
+        async function fetchGallery() {
+            try {
+                const res = await fetch('/api/public/gallery?category=konsultan-personal');
+                const data = await res.json();
+                if (Array.isArray(data) && data.length > 0) {
+                    setGalleryImages(data.map((img: GalleryImage) => img.image));
+                }
+            } catch (error) {
+                console.error('Failed to fetch gallery:', error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchGallery();
+    }, []);
 
     // Auto-slide effect
     useEffect(() => {
+        if (galleryImages.length <= 1) return;
         const timer = setInterval(() => {
-            setCurrentIndex((prev) => (prev + 1) % GALLERY_IMAGES.length);
+            setCurrentIndex((prev) => (prev + 1) % galleryImages.length);
         }, 5000); // Change every 5 seconds
         return () => clearInterval(timer);
-    }, []);
+    }, [galleryImages.length]);
 
     const nextSlide = () => {
-        setCurrentIndex((prev) => (prev + 1) % GALLERY_IMAGES.length);
+        setCurrentIndex((prev) => (prev + 1) % galleryImages.length);
     };
 
     const prevSlide = () => {
-        setCurrentIndex((prev) => (prev - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length);
+        setCurrentIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
     };
 
     return (
@@ -58,7 +81,7 @@ export default function TeamSection() {
                                     className="absolute inset-0 w-full h-full"
                                 >
                                     <Image
-                                        src={GALLERY_IMAGES[currentIndex]}
+                                        src={galleryImages[currentIndex]}
                                         alt={`Dokumentasi ${currentIndex + 1}`}
                                         fill
                                         className="object-cover object-center"
@@ -97,7 +120,7 @@ export default function TeamSection() {
 
                             {/* Dots Indicator */}
                             <div className="absolute bottom-6 right-6 md:left-6 md:right-auto flex gap-1.5 z-20">
-                                {GALLERY_IMAGES.map((_, idx) => (
+                                {galleryImages.map((_: string, idx: number) => (
                                     <div
                                         key={idx}
                                         className={`h-1.5 rounded-full transition-all duration-300 ${idx === currentIndex ? 'w-6 bg-white' : 'w-1.5 bg-white/40'}`}

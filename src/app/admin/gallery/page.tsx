@@ -25,8 +25,14 @@ type GalleryImage = {
     isActive: boolean;
 };
 
-// 2 kategori sesuai kebutuhan user
+// Kategori gallery
 const GALLERY_SECTIONS = [
+    {
+        id: 'semua',
+        label: 'Semua',
+        description: 'Semua foto di galeri',
+        icon: ImageIcon
+    },
     {
         id: 'tentang-kami',
         label: 'Tentang Kami',
@@ -49,7 +55,7 @@ export default function GalleryPage() {
     const [showModal, setShowModal] = useState(false);
     const [selectedImages, setSelectedImages] = useState<string[]>([]);
     const [selectMode, setSelectMode] = useState(false);
-    const [activeTab, setActiveTab] = useState('tentang-kami');
+    const [activeTab, setActiveTab] = useState('semua');
 
     useEffect(() => {
         if (status === 'unauthenticated') {
@@ -111,8 +117,10 @@ export default function GalleryPage() {
         );
     };
 
-    // Filter images by category
-    const filteredImages = images.filter(img => img.category === activeTab);
+    // Filter images by category (or show all)
+    const filteredImages = activeTab === 'semua'
+        ? images
+        : images.filter(img => img.category === activeTab);
 
     if (loading) {
         return (
@@ -186,15 +194,15 @@ export default function GalleryPage() {
                             key={section.id}
                             onClick={() => setActiveTab(section.id)}
                             className={`flex items-center gap-2 px-4 py-3 rounded-xl font-medium whitespace-nowrap transition-all ${activeTab === section.id
-                                    ? 'bg-primary text-white'
-                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                ? 'bg-primary text-white'
+                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                 }`}
                         >
                             <Icon size={18} />
                             {section.label}
                             <span className={`px-2 py-0.5 rounded-full text-xs ${activeTab === section.id
-                                    ? 'bg-white/20 text-white'
-                                    : 'bg-gray-200 text-gray-600'
+                                ? 'bg-white/20 text-white'
+                                : 'bg-gray-200 text-gray-600'
                                 }`}>
                                 {count}
                             </span>
@@ -216,8 +224,8 @@ export default function GalleryPage() {
                     <div
                         key={img.id}
                         className={`relative aspect-square rounded-xl overflow-hidden border-2 transition-all ${selectMode && selectedImages.includes(img.id)
-                                ? 'border-primary ring-2 ring-primary/30'
-                                : 'border-gray-200'
+                            ? 'border-primary ring-2 ring-primary/30'
+                            : 'border-gray-200'
                             }`}
                         onClick={() => selectMode && toggleSelect(img.id)}
                     >
@@ -248,8 +256,8 @@ export default function GalleryPage() {
                         {/* Selection Indicator */}
                         {selectMode && (
                             <div className={`absolute top-2 left-2 w-7 h-7 rounded-full border-2 flex items-center justify-center ${selectedImages.includes(img.id)
-                                    ? 'bg-primary border-primary text-white'
-                                    : 'bg-white/90 border-gray-300'
+                                ? 'bg-primary border-primary text-white'
+                                : 'bg-white/90 border-gray-300'
                                 }`}>
                                 {selectedImages.includes(img.id) && <Check size={16} />}
                             </div>
@@ -274,7 +282,7 @@ export default function GalleryPage() {
             {/* Modal */}
             {showModal && (
                 <AddImageModal
-                    defaultCategory={activeTab}
+                    defaultCategory={activeTab === 'semua' ? 'tentang-kami' : activeTab}
                     onClose={() => setShowModal(false)}
                     onSave={() => {
                         setShowModal(false);
@@ -354,7 +362,7 @@ function AddImageModal({
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Tampilkan di</label>
                         <div className="grid grid-cols-1 gap-3">
-                            {GALLERY_SECTIONS.map((section) => {
+                            {GALLERY_SECTIONS.filter(s => s.id !== 'semua').map((section) => {
                                 const Icon = section.icon;
                                 return (
                                     <button
@@ -362,13 +370,13 @@ function AddImageModal({
                                         type="button"
                                         onClick={() => setForm({ ...form, category: section.id })}
                                         className={`flex items-center gap-3 p-4 rounded-xl border-2 text-left transition-all ${form.category === section.id
-                                                ? 'border-primary bg-red-50'
-                                                : 'border-gray-200 hover:border-gray-300'
+                                            ? 'border-primary bg-red-50'
+                                            : 'border-gray-200 hover:border-gray-300'
                                             }`}
                                     >
                                         <div className={`w-10 h-10 rounded-full flex items-center justify-center ${form.category === section.id
-                                                ? 'bg-primary text-white'
-                                                : 'bg-gray-100 text-gray-500'
+                                            ? 'bg-primary text-white'
+                                            : 'bg-gray-100 text-gray-500'
                                             }`}>
                                             <Icon size={20} />
                                         </div>

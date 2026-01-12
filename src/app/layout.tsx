@@ -1,11 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Outfit } from "next/font/google";
+import { Outfit, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Script from "next/script";
 
 const outfit = Outfit({
   variable: "--font-outfit",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin"],
   display: "swap",
 });
@@ -191,7 +197,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${outfit.variable} antialiased bg-base-white text-tesla-black overflow-x-hidden`}
+        className={`${outfit.variable} ${playfair.variable} antialiased bg-base-white text-tesla-black overflow-x-hidden`}
       >
         {children}
       </body>

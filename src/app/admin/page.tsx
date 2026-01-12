@@ -24,10 +24,9 @@ const menuItems = [
     { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/admin/products', label: 'Produk Motor', icon: Bike },
     { href: '/admin/promo', label: 'Kelola Promo', icon: Tag },
-    { href: '/admin/hero-slides', label: 'Hero Slider', icon: SlidersHorizontal },
     { href: '/admin/testimonials', label: 'Testimoni', icon: Star },
     { href: '/admin/team', label: 'Tim Sales', icon: Users },
-    { href: '/admin/gallery', label: 'Galeri', icon: ImageIcon },
+    { href: '/admin/gallery', label: 'Galeri Foto', icon: ImageIcon },
     { href: '/admin/analytics', label: 'Analytics', icon: BarChart3 },
     { href: '/admin/settings', label: 'Pengaturan', icon: Settings },
 ];

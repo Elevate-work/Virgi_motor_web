@@ -6,6 +6,7 @@ import TeamSection from "@/components/TeamSection";
 import CreditSimulation from "@/components/CreditSimulation";
 import Hero from "@/components/Hero";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import { getWhatsAppLink, getWhatsAppDisplayNumber } from "@/lib/config";
 
 export default function Home() {
   return (
@@ -35,7 +36,7 @@ export default function Home() {
               <a href="#" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#1877F2] cursor-pointer transition-colors text-sm font-bold">
                 FB
               </a>
-              <a href="https://wa.me/6281234567890" target="_blank" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#25D366] cursor-pointer transition-colors text-sm font-bold">
+              <a href={getWhatsAppLink()} target="_blank" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#25D366] cursor-pointer transition-colors text-sm font-bold">
                 WA
               </a>
             </div>
@@ -74,7 +75,7 @@ export default function Home() {
               </li>
               <li className="flex gap-3">
                 <span>💬</span>
-                <a href="https://wa.me/6281234567890" target="_blank" className="text-[#25D366] hover:underline">0812-3456-7890 (WA)</a>
+                <a href={getWhatsAppLink()} target="_blank" className="text-[#25D366] hover:underline">{getWhatsAppDisplayNumber()} (WA)</a>
               </li>
             </ul>
           </div>

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Phone, CheckCircle2 } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { siteConfig } from '@/lib/config';
 
 // Type untuk product dari API
 type Product = {
@@ -30,11 +31,10 @@ function formatPrice(price: number): string {
 }
 
 function generateWhatsAppLink(product: Product): string {
-    const phone = '6281234567890'; // TODO: Ambil dari settings
     const message = product.promo?.isActive
         ? `Halo, saya tertarik dengan PROMO ${product.name} (${product.promo.badgeText}). Mohon info lebih lanjut.`
         : `Halo, saya tertarik dengan ${product.name}. Mohon info harga dan kredit.`;
-    return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    return `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(message)}`;
 }
 
 export default function PromoSection() {
@@ -46,7 +46,10 @@ export default function PromoSection() {
             try {
                 const res = await fetch('/api/public/products?promo=1');
                 const data = await res.json();
-                setPromoProducts(data);
+                // Pastikan data adalah array sebelum set state
+                if (Array.isArray(data)) {
+                    setPromoProducts(data);
+                }
             } catch (error) {
                 console.error('Failed to fetch promos:', error);
             } finally {

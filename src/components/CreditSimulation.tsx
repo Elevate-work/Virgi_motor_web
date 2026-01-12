@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2, ChevronDown, HelpCircle, FileText, Clock, MapPin } from 'lucide-react';
+import { getWhatsAppLink } from '@/lib/config';
 
 const FAQS = [
     {
@@ -114,8 +115,8 @@ export default function CreditSimulation() {
                                     transition={{ duration: 0.5, delay: idx * 0.1 }}
                                     onClick={() => setOpenIndex(process => process === idx ? null : idx)}
                                     className={`cursor-pointer rounded-2xl border transition-all duration-300 overflow-hidden ${openIndex === idx
-                                            ? 'bg-white/10 border-primary/50'
-                                            : 'bg-white/5 border-white/5 hover:bg-white/10'
+                                        ? 'bg-white/10 border-primary/50'
+                                        : 'bg-white/5 border-white/5 hover:bg-white/10'
                                         }`}
                                 >
                                     <div className="p-6 flex justify-between items-center gap-4">
@@ -151,7 +152,7 @@ export default function CreditSimulation() {
                                 <p className="text-white font-bold text-lg">Hubungi Sales Senior Kami</p>
                             </div>
                             <a
-                                href="https://wa.me/6281234567890"
+                                href={getWhatsAppLink('Halo Pak, saya mau tanya persyaratan dan simulasi kredit motor Honda.')}
                                 className="px-6 py-3 bg-primary hover:bg-red-700 text-white font-bold rounded-xl transition-colors shadow-lg shadow-primary/20 whitespace-nowrap"
                             >
                                 Tanya via WhatsApp

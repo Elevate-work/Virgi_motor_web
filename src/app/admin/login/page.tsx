@@ -75,7 +75,7 @@ export default function AdminLoginPage() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
-                                placeholder="admin@virgimotor.com"
+                                placeholder="*******"
                                 required
                             />
                         </div>
@@ -104,7 +104,7 @@ export default function AdminLoginPage() {
                     </form>
 
                     <p className="text-center text-gray-400 text-xs mt-6">
-                        &copy; 2024 Pos Resmi Virgi Motor. CMS v1.0
+                        &copy; 2026 Pos Resmi Virgi Motor. CMS v1.0
                     </p>
                 </div>
 

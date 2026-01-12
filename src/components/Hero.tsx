@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { ArrowRight, MapPin, MessageCircle, FileCheck2, Wrench } from 'lucide-react';
+import { getWhatsAppLink } from '@/lib/config';
 
 export default function Hero() {
     return (
@@ -38,7 +39,7 @@ export default function Hero() {
                         <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
                             {/* Primary: Chat WA */}
                             <a
-                                href="https://wa.me/6281234567890?text=Halo%20Virgi%20Motor,%20saya%20mau%20tanya%20promo%20terbaru"
+                                href={getWhatsAppLink('Halo Pak, saya tertarik untuk beli motor Honda. Bisa dibantu info promo dan harga terbaru?')}
                                 target="_blank"
                                 className="group w-full sm:w-auto bg-[#DA0000] text-white hover:bg-black rounded-full px-8 py-4 font-bold text-base shadow-lg shadow-red-600/20 flex items-center justify-center gap-3 transition-all transform hover:-translate-y-1"
                             >

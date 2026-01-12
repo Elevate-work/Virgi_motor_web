@@ -76,14 +76,14 @@ export default function PromoPage() {
     }
 
     return (
-        <div className="p-6 lg:p-8 max-w-6xl mx-auto">
+        <div className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto">
             {/* Header */}
-            <div className="flex items-center gap-4 mb-8">
+            <div className="flex items-center gap-4 mb-6">
                 <Link href="/admin" className="p-2 hover:bg-gray-100 rounded-lg">
                     <ArrowLeft size={20} />
                 </Link>
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Kelola Promo</h1>
+                    <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Kelola Promo</h1>
                     <p className="text-gray-500 text-sm">{activePromos.length} promo aktif dari {products.length} produk</p>
                 </div>
             </div>
@@ -117,9 +117,9 @@ export default function PromoPage() {
                 <h2 className="text-lg font-bold text-gray-900 mb-4">Produk Lainnya</h2>
                 <div className="bg-white rounded-2xl border border-gray-200 divide-y divide-gray-100">
                     {inactiveProducts.map((product) => (
-                        <div key={product.id} className="flex items-center justify-between p-4 hover:bg-gray-50">
+                        <div key={product.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 gap-4">
                             <div className="flex items-center gap-4">
-                                <div className="w-16 h-12 bg-gray-100 rounded-lg overflow-hidden relative">
+                                <div className="w-16 h-12 bg-gray-100 rounded-lg overflow-hidden relative shrink-0">
                                     <Image
                                         src={product.image}
                                         alt={product.name}
@@ -132,19 +132,20 @@ export default function PromoPage() {
                                     <p className="text-xs text-gray-500">{product.category}</p>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-2">
                                 <Link
                                     href={`/admin/products/${product.id}`}
-                                    className="p-2 text-gray-500 hover:bg-gray-100 rounded-lg"
+                                    className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 text-gray-700 rounded-lg active:scale-95 transition-transform"
                                 >
                                     <Edit2 size={16} />
+                                    <span className="sm:hidden">Edit</span>
                                 </Link>
                                 <button
                                     onClick={() => togglePromo(product.id, product.promoActive)}
-                                    className="flex items-center gap-2 px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-primary hover:text-white transition-colors text-sm font-medium"
+                                    className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 bg-green-500 text-white rounded-lg font-medium active:scale-95 transition-transform"
                                 >
                                     <ToggleLeft size={16} />
-                                    Aktifkan Promo
+                                    Aktifkan
                                 </button>
                             </div>
                         </div>
@@ -189,13 +190,13 @@ function PromoCard({ product, onToggle }: { product: Product; onToggle: () => vo
                 <div className="flex gap-2">
                     <Link
                         href={`/admin/products/${product.id}`}
-                        className="flex-1 py-2 text-center bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200"
+                        className="flex-1 py-3 text-center bg-gray-100 text-gray-700 rounded-lg text-sm font-medium active:scale-95 transition-transform"
                     >
                         Edit Detail
                     </Link>
                     <button
                         onClick={onToggle}
-                        className="p-2 text-red-500 hover:bg-red-50 rounded-lg"
+                        className="px-4 py-3 bg-red-50 text-red-500 rounded-lg active:scale-95 transition-transform"
                         title="Nonaktifkan Promo"
                     >
                         <ToggleRight size={20} />

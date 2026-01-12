@@ -84,21 +84,21 @@ export default function TeamPage() {
     }
 
     return (
-        <div className="p-6 lg:p-8 max-w-6xl mx-auto">
+        <div className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto">
             {/* Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+            <div className="flex flex-col gap-4 mb-6">
                 <div className="flex items-center gap-4">
                     <Link href="/admin" className="p-2 hover:bg-gray-100 rounded-lg">
                         <ArrowLeft size={20} />
                     </Link>
                     <div>
-                        <h1 className="text-2xl font-bold text-gray-900">Tim Sales</h1>
+                        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Tim Sales</h1>
                         <p className="text-gray-500 text-sm">{members.length} anggota tim</p>
                     </div>
                 </div>
                 <button
                     onClick={openAddModal}
-                    className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-xl font-medium hover:bg-red-700 transition-colors"
+                    className="flex items-center justify-center gap-2 px-4 py-3 sm:py-2 bg-primary text-white rounded-xl font-medium sm:self-start"
                 >
                     <Plus size={18} />
                     Tambah Anggota
@@ -145,14 +145,14 @@ export default function TeamPage() {
                             <div className="flex gap-2">
                                 <button
                                     onClick={() => openEditModal(member)}
-                                    className="flex-1 flex items-center justify-center gap-2 py-2 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors"
+                                    className="flex-1 flex items-center justify-center gap-2 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium active:scale-95 transition-transform"
                                 >
                                     <Edit2 size={16} />
                                     Edit
                                 </button>
                                 <button
                                     onClick={() => handleDelete(member.id)}
-                                    className="p-2 text-red-500 hover:bg-red-50 rounded-xl transition-colors"
+                                    className="px-4 py-3 bg-red-50 text-red-500 rounded-xl active:scale-95 transition-transform"
                                 >
                                     <Trash2 size={18} />
                                 </button>

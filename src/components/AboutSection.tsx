@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { BadgeCheck, Clock, ShieldCheck, MapPin, Phone, MessageCircle, HeartHandshake, Award, ImageIcon, ArrowRight, User } from 'lucide-react';
+import { getWhatsAppLink, getWhatsAppDisplayNumber } from '@/lib/config';
 
 type GalleryImage = {
     id: string;
@@ -93,7 +94,7 @@ export default function AboutSection() {
 
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <a
-                                href="https://wa.me/6281234567890"
+                                href={getWhatsAppLink()}
                                 target="_blank"
                                 className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#DA0000] text-white font-bold rounded-full shadow-lg hover:bg-black hover:-translate-y-1 transition-all"
                             >
@@ -345,8 +346,8 @@ export default function AboutSection() {
                                     <div>
                                         <h4 className="font-bold text-tesla-black mb-1">Kontak Sales Resmi</h4>
                                         <p className="text-gray-600 mb-1">(021) 8900-8888 (Telepon Kantor)</p>
-                                        <a href="https://wa.me/6281234567890" target="_blank" className="text-[#25D366] font-bold hover:underline flex items-center gap-2">
-                                            0812-3456-7890 (WhatsApp Available)
+                                        <a href={getWhatsAppLink()} target="_blank" className="text-[#25D366] font-bold hover:underline flex items-center gap-2">
+                                            {getWhatsAppDisplayNumber()} (WhatsApp Available)
                                         </a>
                                     </div>
                                 </div>

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, Phone, Award, Clock, ThumbsUp, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
+import { getWhatsAppLink, siteConfig } from '@/lib/config';
 
 // Placeholder images for documentation gallery
 // Replace these URLs with real photos of your father with customers
@@ -74,7 +75,7 @@ export default function TeamSection() {
                                 {/* Text Info (Optional, e.g. "Dokumentasi") */}
                                 <div className="text-white md:hidden">
                                     <p className="text-xs font-bold uppercase tracking-widest opacity-80 mb-1">Galeri & Dokumentasi</p>
-                                    <h3 className="text-xl font-bold">Bpk. Virgi</h3>
+                                    <h3 className="text-xl font-bold">Bpk. Turyono</h3>
                                 </div>
 
                                 {/* Navigation Arrows */}
@@ -124,7 +125,7 @@ export default function TeamSection() {
                                 </h2>
 
                                 <p className="text-gray-500 text-lg leading-relaxed mb-8">
-                                    "Halo, saya Bpk. Virgi. Lihat berbagai dokumentasi serah terima unit kami di samping. Dengan pengalaman belasan tahun, saya pastikan motor impian Anda sampai di rumah dengan aman dan cepat."
+                                    "Halo, saya Bpk. Turyono Lihat berbagai dokumentasi serah terima unit kami di samping. Dengan pengalaman belasan tahun dan 500+ motor yang telah saya jual, saya pastikan motor impian Anda sampai di rumah dengan aman dan cepat."
                                 </p>
 
                                 {/* Trust Points */}
@@ -158,7 +159,7 @@ export default function TeamSection() {
                                 {/* Action Buttons */}
                                 <div className="flex flex-col sm:flex-row gap-4">
                                     <a
-                                        href="https://wa.me/6281234567890" // Ganti dengan nomor asli ayah
+                                        href={getWhatsAppLink('Halo Pak Turyono, saya mau beli motor Honda. Mohon info unit ready stock dan harga terbaik.')}
                                         target="_blank"
                                         className="flex-1 flex items-center justify-center gap-3 py-4 rounded-xl bg-[#25D366] text-white font-bold text-lg hover:bg-[#20bd5a] transition-all shadow-lg shadow-green-500/20 transform hover:-translate-y-1 hover:shadow-green-500/40"
                                     >
@@ -166,7 +167,7 @@ export default function TeamSection() {
                                         Chat WhatsApp
                                     </a>
                                     <a
-                                        href="tel:6281234567890" // Ganti dengan nomor asli
+                                        href={`tel:${siteConfig.whatsappNumber}`}
                                         className="sm:w-auto px-8 flex items-center justify-center gap-3 py-4 rounded-xl border-2 border-gray-100 text-gray-700 font-bold text-lg hover:border-gray-200 hover:bg-gray-50 transition-all"
                                     >
                                         <Phone className="w-6 h-6" />

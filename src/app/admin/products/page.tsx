@@ -12,7 +12,7 @@ import {
     Edit2,
     Trash2,
     Tag,
-    MoreVertical
+    Bike
 } from 'lucide-react';
 
 type Product = {
@@ -29,7 +29,7 @@ type Product = {
 };
 
 export default function ProductsPage() {
-    const { data: session, status } = useSession();
+    const { status } = useSession();
     const router = useRouter();
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
@@ -49,7 +49,9 @@ export default function ProductsPage() {
         try {
             const res = await fetch('/api/admin/products');
             const data = await res.json();
-            setProducts(data);
+            if (Array.isArray(data)) {
+                setProducts(data);
+            }
         } catch (error) {
             console.error('Failed to fetch products:', error);
         } finally {
@@ -81,25 +83,29 @@ export default function ProductsPage() {
     }
 
     return (
-        <div className="p-6 lg:p-8 max-w-6xl mx-auto">
+        <div className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto">
             {/* Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+            <div className="flex flex-col gap-4 mb-6">
                 <div className="flex items-center gap-4">
                     <Link href="/admin" className="p-2 hover:bg-gray-100 rounded-lg">
                         <ArrowLeft size={20} />
                     </Link>
                     <div>
-                        <h1 className="text-2xl font-bold text-gray-900">Produk Motor</h1>
+                        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Produk Motor</h1>
                         <p className="text-gray-500 text-sm">{products.length} total produk</p>
                     </div>
                 </div>
-                <Link
-                    href="/admin/products/new"
-                    className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-xl font-medium hover:bg-red-700 transition-colors"
-                >
-                    <Plus size={18} />
-                    Tambah Produk
-                </Link>
+
+                {/* Action Buttons */}
+                <div className="flex gap-2">
+                    <Link
+                        href="/admin/products/new"
+                        className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-3 sm:py-2 bg-primary text-white rounded-xl font-medium"
+                    >
+                        <Plus size={18} />
+                        Tambah Produk
+                    </Link>
+                </div>
             </div>
 
             {/* Search */}
@@ -114,83 +120,79 @@ export default function ProductsPage() {
                 />
             </div>
 
-            {/* Products Table */}
-            <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
-                <table className="w-full">
-                    <thead className="bg-gray-50 border-b border-gray-200">
-                        <tr>
-                            <th className="text-left px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Produk</th>
-                            <th className="text-left px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider hidden md:table-cell">Kategori</th>
-                            <th className="text-left px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider hidden lg:table-cell">Harga</th>
-                            <th className="text-left px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Promo</th>
-                            <th className="text-right px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-100">
-                        {filteredProducts.map((product) => (
-                            <tr key={product.id} className="hover:bg-gray-50">
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-16 h-12 bg-gray-100 rounded-lg overflow-hidden relative shrink-0">
-                                            <Image
-                                                src={product.image}
-                                                alt={product.name}
-                                                fill
-                                                className="object-contain"
-                                            />
-                                        </div>
-                                        <div>
-                                            <p className="font-medium text-gray-900">{product.name}</p>
-                                            <p className="text-xs text-gray-500">{product.cc}</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4 hidden md:table-cell">
-                                    <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-lg">
-                                        {product.category}
-                                    </span>
-                                </td>
-                                <td className="px-6 py-4 hidden lg:table-cell">
-                                    <p className="font-medium">Rp {product.price.toLocaleString('id-ID')}</p>
-                                    <p className="text-xs text-gray-500">DP: Rp {product.dpMin.toLocaleString('id-ID')}</p>
-                                </td>
-                                <td className="px-6 py-4">
-                                    {product.promoActive ? (
-                                        <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-lg">
-                                            <Tag size={12} />
-                                            {product.promoBadgeText || 'Aktif'}
-                                        </span>
-                                    ) : (
-                                        <span className="text-gray-400 text-xs">-</span>
-                                    )}
-                                </td>
-                                <td className="px-6 py-4 text-right">
-                                    <div className="flex items-center justify-end gap-2">
-                                        <Link
-                                            href={`/admin/products/${product.id}`}
-                                            className="p-2 hover:bg-gray-100 rounded-lg text-gray-600"
-                                        >
-                                            <Edit2 size={16} />
-                                        </Link>
-                                        <button
-                                            onClick={() => handleDelete(product.id)}
-                                            className="p-2 hover:bg-red-50 rounded-lg text-red-600"
-                                        >
-                                            <Trash2 size={16} />
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+            {/* Products Grid - Mobile Friendly Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {filteredProducts.map((product) => (
+                    <div
+                        key={product.id}
+                        className="bg-white rounded-xl border border-gray-200 overflow-hidden"
+                    >
+                        {/* Product Image */}
+                        <div className="relative h-40 bg-gray-50">
+                            <Image
+                                src={product.image}
+                                alt={product.name}
+                                fill
+                                className="object-contain p-4"
+                            />
+                            {product.promoActive && (
+                                <span className="absolute top-2 left-2 inline-flex items-center gap-1 px-2 py-1 bg-green-500 text-white text-xs font-bold rounded">
+                                    <Tag size={10} />
+                                    {product.promoBadgeText || 'PROMO'}
+                                </span>
+                            )}
+                        </div>
 
-                {filteredProducts.length === 0 && (
-                    <div className="text-center py-12 text-gray-500">
-                        Tidak ada produk ditemukan
+                        {/* Product Info */}
+                        <div className="p-4">
+                            <div className="flex items-start justify-between gap-2 mb-2">
+                                <div>
+                                    <h3 className="font-bold text-gray-900 line-clamp-1">{product.name}</h3>
+                                    <p className="text-xs text-gray-500">{product.cc} • {product.category}</p>
+                                </div>
+                            </div>
+
+                            <div className="flex items-end justify-between mb-4">
+                                <div>
+                                    <p className="text-xs text-gray-400">Harga OTR</p>
+                                    <p className="font-bold text-gray-900">Rp {product.price.toLocaleString('id-ID')}</p>
+                                </div>
+                                <div className="text-right">
+                                    <p className="text-xs text-gray-400">DP Min</p>
+                                    <p className="font-medium text-primary">Rp {product.dpMin.toLocaleString('id-ID')}</p>
+                                </div>
+                            </div>
+
+                            {/* Action Buttons - Always Visible */}
+                            <div className="flex gap-2">
+                                <Link
+                                    href={`/admin/products/${product.id}`}
+                                    className="flex-1 flex items-center justify-center gap-2 py-3 bg-gray-100 text-gray-700 rounded-lg font-medium active:scale-95 transition-transform"
+                                >
+                                    <Edit2 size={16} />
+                                    Edit
+                                </Link>
+                                <button
+                                    onClick={() => handleDelete(product.id)}
+                                    className="px-4 py-3 bg-red-50 text-red-600 rounded-lg active:scale-95 transition-transform"
+                                >
+                                    <Trash2 size={16} />
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                )}
+                ))}
             </div>
+
+            {filteredProducts.length === 0 && (
+                <div className="text-center py-16 text-gray-500">
+                    <Bike size={48} className="mx-auto mb-4 text-gray-300" />
+                    <p className="mb-2">Tidak ada produk ditemukan</p>
+                    <Link href="/admin/products/new" className="text-primary font-medium hover:underline">
+                        + Tambah Produk Pertama
+                    </Link>
+                </div>
+            )}
         </div>
     );
 }

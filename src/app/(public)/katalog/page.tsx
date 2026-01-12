@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Search, ArrowRight, Bike, Zap, Settings, Filter, Loader2, Sparkles } from 'lucide-react';
+import { Search, ArrowRight, Bike, Zap, Settings, Filter, Loader2 } from 'lucide-react';
+import { siteConfig } from '@/lib/config';
 
 // Type untuk product dari API
 type Product = {
@@ -108,8 +109,8 @@ export default function Catalog() {
                                 key={cat.id}
                                 onClick={() => setFilter(cat.id as any)}
                                 className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold transition-all whitespace-nowrap border ${filter === cat.id
-                                        ? 'bg-tesla-black text-white border-tesla-black'
-                                        : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                                    ? 'bg-tesla-black text-white border-tesla-black'
+                                    : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300 hover:bg-gray-50'
                                     }`}
                             >
                                 {/* Icon color logic */}
@@ -170,15 +171,15 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.05, duration: 0.5 }}
             viewport={{ once: true }}
-            className="group bg-white rounded-2xl p-4 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-gray-100 flex flex-col"
+            className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex flex-col"
         >
             {/* Image Container */}
             <div className="relative aspect-[4/3] bg-gray-50 rounded-xl mb-4 overflow-hidden flex items-center justify-center p-4">
                 {/* Badges */}
                 <div className="absolute top-3 left-3 z-10 flex flex-col gap-1">
                     {hasPromo && (
-                        <span className="inline-flex items-center gap-1 px-2 py-1 bg-[#DA0000] text-white text-[10px] font-bold uppercase tracking-wider rounded">
-                            <Sparkles size={10} /> Promo
+                        <span className="px-2 py-1 bg-[#DA0000] text-white text-[10px] font-bold uppercase tracking-wider rounded">
+                            Promo
                         </span>
                     )}
                     <span className="px-2 py-1 bg-white/90 backdrop-blur text-tesla-black border border-gray-200 text-[10px] font-bold uppercase tracking-wider rounded">
@@ -189,13 +190,13 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
                 <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-full object-contain"
                 />
             </div>
 
             {/* Content */}
             <div className="flex flex-col flex-grow">
-                <h3 className="text-lg font-bold text-tesla-black leading-tight mb-1 group-hover:text-[#DA0000] transition-colors">
+                <h3 className="text-lg font-bold text-tesla-black leading-tight mb-1">
                     {product.name}
                 </h3>
                 <p className="text-xs text-gray-500 mb-4">{product.cc} CC • Matic</p>
@@ -225,7 +226,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
                     </div>
 
                     <a
-                        href={`https://wa.me/6281234567890?text=Halo,+saya+tertarik+dengan+${encodeURIComponent(product.name)}`}
+                        href={`https://wa.me/${siteConfig.whatsappNumber}?text=Halo,+saya+tertarik+dengan+${encodeURIComponent(product.name)}`}
                         target="_blank"
                         className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg bg-tesla-black text-white text-sm font-bold hover:bg-[#DA0000] transition-colors"
                     >

@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { ArrowRight, Star, CheckCircle2, ThumbsUp } from 'lucide-react';
+import { ArrowRight, MapPin, MessageCircle, FileCheck2, Wrench } from 'lucide-react';
 
 export default function Hero() {
     return (
@@ -10,39 +10,49 @@ export default function Hero() {
 
             <div className="container mx-auto px-4 sm:px-6 md:px-12 flex-grow flex flex-col md:flex-row items-center">
 
-                {/* === LEFT CONTENT (TYPOGRAPHY) === */}
+                {/* === LEFT CONTENT (COPYWRITING MANUSIA) === */}
                 <div className="w-full md:w-1/2 z-10 flex flex-col items-center md:items-start text-center md:text-left pt-10 md:pt-0">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
                     >
-                        {/* Tagline Pill */}
-                        <div className="inline-block py-2 px-6 rounded-full border border-gray-300 bg-white text-gray-500 text-xs font-bold tracking-widest uppercase mb-8">
-                            Virgi Motor Dealer Resmi Honda
+                        {/* Contextual Pill */}
+                        <div className="inline-flex items-center gap-2 py-2 px-4 rounded-full border border-gray-200 bg-gray-50 text-gray-600 text-xs font-bold tracking-wide uppercase mb-8">
+                            <MapPin size={14} className="text-[#DA0000]" />
+                            <span>Pilihan Warga Cikarang & Kab. Bekasi</span>
                         </div>
 
-                        {/* HEADLINE */}
-                        <h1 className="text-5xl sm:text-6xl lg:text-7xl font-serif text-tesla-black leading-tight mb-2 tracking-tight">
-                            Promo Spesial:
-                        </h1>
-                        <h1 className="text-5xl sm:text-6xl lg:text-7xl font-serif text-[#DA0000] leading-tight mb-6 tracking-tight">
-                            Diskon Besar
+                        {/* HEADLINE: Solusi Nyata */}
+                        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif text-tesla-black leading-[1.1] mb-6 tracking-tight">
+                            Beli Motor Honda, <br />
+                            <span className="text-[#DA0000] italic">Tanpa Ribet</span> di Virgi Motor.
                         </h1>
 
-                        {/* Description */}
-                        <p className="text-gray-600 text-lg md:text-xl font-medium leading-relaxed max-w-lg mb-10 mx-auto md:mx-0">
-                            Dapatkan potongan harga hingga jutaan rupiah, DP mulai 5%, dan bunga rendah. <span className="text-tesla-black font-bold">Hanya bulan ini!</span>
+                        {/* DESCRIPTION: Story & Trust */}
+                        <p className="text-gray-600 text-lg font-medium leading-relaxed max-w-lg mb-8 mx-auto md:mx-0">
+                            Kami paham kesibukan Anda. Sejak 2010, kami telah membantu <strong className="text-tesla-black">5.000+ warga Cikarang</strong> mendapatkan motor impian. KTP daerah dibantu, STNK diantar ke rumah.
                         </p>
 
-                        {/* CTA Button */}
-                        <div className="flex justify-center md:justify-start">
+                        {/* CTA BERTINGKAT: Action & Exploration */}
+                        <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
+                            {/* Primary: Chat WA */}
                             <a
-                                href="#promo-section"
-                                className="group bg-[#DA0000] text-white hover:bg-black rounded-full px-10 py-4 font-bold text-base md:text-lg shadow-lg shadow-red-600/20 flex items-center gap-3 transition-all transform hover:-translate-y-1"
+                                href="https://wa.me/6281234567890?text=Halo%20Virgi%20Motor,%20saya%20mau%20tanya%20promo%20terbaru"
+                                target="_blank"
+                                className="group w-full sm:w-auto bg-[#DA0000] text-white hover:bg-black rounded-full px-8 py-4 font-bold text-base shadow-lg shadow-red-600/20 flex items-center justify-center gap-3 transition-all transform hover:-translate-y-1"
                             >
-                                CEK PROMO SEKARANG
-                                <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                                <MessageCircle size={20} />
+                                Chat Sales (Respon Cepat)
+                            </a>
+
+                            {/* Secondary: Lihat Katalog */}
+                            <a
+                                href="/katalog"
+                                className="group w-full sm:w-auto bg-white border-2 border-gray-200 text-gray-700 hover:border-[#DA0000] hover:text-[#DA0000] rounded-full px-8 py-4 font-bold text-base flex items-center justify-center gap-3 transition-all"
+                            >
+                                Lihat Katalog
+                                <ArrowRight size={18} className="text-gray-400 group-hover:text-[#DA0000] transition-colors" />
                             </a>
                         </div>
                     </motion.div>
@@ -60,7 +70,7 @@ export default function Hero() {
                         <div className="relative aspect-[4/3] md:aspect-square">
                             <Image
                                 src="/for_hero.png" // Menggunakan gambar yang sudah ada
-                                alt="Honda CBR 250RR"
+                                alt="Motor Honda Terbaru di Virgi Motor Cikarang"
                                 fill
                                 className="object-contain object-center scale-110 md:scale-125"
                                 priority
@@ -70,51 +80,42 @@ export default function Hero() {
                 </div>
             </div>
 
-            {/* === BOTTOM STATS BAR === */}
-            <div className="w-full border-t border-gray-200 bg-white z-20 mt-auto">
+            {/* === BOTTOM STATS BAR: Real Value Props === */}
+            <div className="w-full border-t border-gray-100 bg-white z-20 mt-auto">
                 <div className="container mx-auto px-4 md:px-12">
-                    <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-200">
-                        {/* Stat 1 */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.4 }}
-                            className="py-8 flex flex-col items-center justify-center text-center group hover:bg-gray-50 transition-colors"
-                        >
-                            <div className="flex items-center gap-3 mb-2">
-                                <Star className="w-6 h-6 text-tesla-black fill-current" />
-                                <span className="text-4xl font-serif font-bold text-tesla-black">15+</span>
+                    <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-100">
+                        {/* Value 1: Lokasi & Admin */}
+                        <div className="py-6 px-4 flex items-center gap-4 group hover:bg-gray-50 transition-colors">
+                            <div className="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center text-[#DA0000] shrink-0">
+                                <FileCheck2 size={24} />
                             </div>
-                            <span className="text-sm text-gray-500 font-bold tracking-widest uppercase">Tahun Pengalaman</span>
-                        </motion.div>
+                            <div>
+                                <h4 className="font-serif font-bold text-lg text-tesla-black leading-tight">Plat B Cikarang</h4>
+                                <p className="text-sm text-gray-500">Urus STNK & BPKB Tanpa Calo</p>
+                            </div>
+                        </div>
 
-                        {/* Stat 2 */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.6 }}
-                            className="py-8 flex flex-col items-center justify-center text-center group hover:bg-gray-50 transition-colors"
-                        >
-                            <div className="flex items-center gap-3 mb-2">
-                                <CheckCircle2 className="w-6 h-6 text-tesla-black fill-current" />
-                                <span className="text-4xl font-serif font-bold text-tesla-black">500+</span>
+                        {/* Value 2: Kemudahan Kredit */}
+                        <div className="py-6 px-4 flex items-center gap-4 group hover:bg-gray-50 transition-colors">
+                            <div className="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center text-[#DA0000] shrink-0">
+                                <MapPin size={24} />
                             </div>
-                            <span className="text-sm text-gray-500 font-bold tracking-widest uppercase">Unit Terjual</span>
-                        </motion.div>
+                            <div>
+                                <h4 className="font-serif font-bold text-lg text-tesla-black leading-tight">Lokasi Strategis</h4>
+                                <p className="text-sm text-gray-500">Jl. Cikarang Baru No. 88 (Dekat SGC)</p>
+                            </div>
+                        </div>
 
-                        {/* Stat 3 */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.8 }}
-                            className="py-8 flex flex-col items-center justify-center text-center group hover:bg-gray-50 transition-colors"
-                        >
-                            <div className="flex items-center gap-3 mb-2">
-                                <ThumbsUp className="w-6 h-6 text-tesla-black fill-current" />
-                                <span className="text-4xl font-serif font-bold text-tesla-black">98%</span>
+                        {/* Value 3: Aftersales */}
+                        <div className="py-6 px-4 flex items-center gap-4 group hover:bg-gray-50 transition-colors">
+                            <div className="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center text-[#DA0000] shrink-0">
+                                <Wrench size={24} />
                             </div>
-                            <span className="text-sm text-gray-500 font-bold tracking-widest uppercase">Pelanggan Puas</span>
-                        </motion.div>
+                            <div>
+                                <h4 className="font-serif font-bold text-lg text-tesla-black leading-tight">Bengkel Resmi AHASS</h4>
+                                <p className="text-sm text-gray-500">Service Mudah, Sparepart Asli</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
